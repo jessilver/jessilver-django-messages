@@ -69,12 +69,24 @@ def visual_stress_test_view(request):
                 Atualizar Foto de Perfil:
             </label>
             <div style="display:flex; align-items:center; gap:1rem; margin-bottom:.75rem;">
-                <img src="https://via.placeholder.com/60"
-                     style="border-radius:50%; border:2px solid #e5e7eb;"
-                     alt="preview" width="60" height="60">
+                <img id="jess-foto-preview"
+                     src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Ccircle cx='30' cy='30' r='30' fill='%23e5e7eb'/%3E%3Ccircle cx='30' cy='23' r='10' fill='%239ca3af'/%3E%3Cellipse cx='30' cy='48' rx='16' ry='10' fill='%239ca3af'/%3E%3C/svg%3E"
+                     style="width:60px; height:60px; min-width:60px; min-height:60px;
+                            border-radius:50%; border:2px solid #e5e7eb;
+                            object-fit:cover; flex-shrink:0;"
+                     alt="preview">
                 <input type="file" name="foto"
                        style="font-size:.875rem; flex:1;"
-                       accept="image/jpeg,image/png,image/webp">
+                       accept="image/jpeg,image/png,image/webp"
+                       onchange="(function(input){
+                           var file = input.files[0];
+                           if (!file) return;
+                           var reader = new FileReader();
+                           reader.onload = function(e) {
+                               document.getElementById('jess-foto-preview').src = e.target.result;
+                           };
+                           reader.readAsDataURL(file);
+                       })(this)">
             </div>
             <div style="font-size:.8rem; background:#eff6ff; border:1px solid #bfdbfe;
                         border-radius:.4rem; padding:.4rem .75rem; color:#1d4ed8;">
