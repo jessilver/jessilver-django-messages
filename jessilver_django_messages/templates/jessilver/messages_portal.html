@@ -1,0 +1,39 @@
+<div id="jess-portal-backdrop" class="jess-modal" style="display: none;">
+    <div id="jess-active-frame-container" class="jess-modal-dialog">
+        </div>
+</div>
+
+<div id="jess-messages-storage" style="display: none;">
+    {% for msg in messages %}
+    <div class="jess-modal-content jess-frame" data-index="{{ forloop.counter0 }}">
+        <div class="jess-modal-header">
+            <h5>
+                <span class="jess-me-2 jess-text-{{ msg.type }}">
+                    {% if msg.type == 'success' %}✓{% elif msg.type == 'error' %}✕{% elif msg.type == 'warning' %}⚠{% else %}ℹ{% endif %}
+                </span>
+                <span>{{ msg.title }}</span>
+            </h5>
+            {% if msg.show_close_button %}<button class="jess-btn-close" onclick="jessOrchestrator.next()">&times;</button>{% endif %}
+        </div>
+        <div class="jess-modal-body">
+            <p>{{ msg.message }}</p>
+            {% if msg.extraContent %}
+            <div id="extra-{{ forloop.counter0 }}">
+                {{ msg.extraContent|safe }}
+            </div>
+            {% endif %}
+        </div>
+        <div class="jess-modal-footer">
+            {% if msg.buttons %}
+                {% for btn in msg.buttons %}
+                <button class="jess-btn {{ btn.class }}" data-action="{{ btn.action }}" onclick="jessOrchestrator.handleAction('{{ btn.action }}', '{{ btn.callback }}')">
+                    {{ btn.text }}
+                </button>
+                {% endfor %}
+            {% else %}
+                <button class="jess-btn jess-btn-{{ msg.type }}" onclick="jessOrchestrator.next()">Fechar</button>
+            {% endif %}
+        </div>
+    </div>
+    {% endfor %}
+</div>

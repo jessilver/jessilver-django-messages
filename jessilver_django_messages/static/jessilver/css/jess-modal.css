@@ -1,0 +1,278 @@
+/* ─── Variáveis ─────────────────────────────────────── */
+:root {
+    --jess-success: #22c55e;
+    --jess-success-dark: #16a34a;
+    --jess-success-light: #f0fdf4;
+
+    --jess-error: #ef4444;
+    --jess-error-dark: #dc2626;
+    --jess-error-light: #fff5f5;
+
+    --jess-warning: #f59e0b;
+    --jess-warning-dark: #d97706;
+    --jess-warning-light: #fffbeb;
+
+    --jess-info: #3b82f6;
+    --jess-info-dark: #2563eb;
+    --jess-info-light: #eff6ff;
+
+    --jess-radius: 1rem;
+    --jess-shadow: 0 8px 32px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.08);
+    --jess-font: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* ─── Overlay ───────────────────────────────────────── */
+.jess-modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(15, 23, 42, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1050;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    font-family: var(--jess-font);
+}
+
+.jess-modal.jess-show {
+    opacity: 1;
+}
+
+/* ─── Dialog ────────────────────────────────────────── */
+.jess-modal-dialog {
+    width: 100%;
+    max-width: 480px;
+    margin: 1.5rem;
+    transform: scale(0.94) translateY(12px);
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.jess-modal.jess-show .jess-modal-dialog {
+    transform: scale(1) translateY(0);
+}
+
+/* ─── Card ──────────────────────────────────────────── */
+.jess-modal-content {
+    background: #ffffff;
+    border: none;
+    border-radius: var(--jess-radius);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--jess-shadow);
+    overflow: hidden;
+}
+
+/* ─── Header ────────────────────────────────────────── */
+.jess-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.1rem 1.4rem;
+    border-bottom: none;
+    position: relative;
+}
+
+/* Gradiente colorido no header conforme tipo */
+.jess-modal-content:has(.jess-text-success) .jess-modal-header {
+    background: linear-gradient(135deg, var(--jess-success-light) 0%, #dcfce7 100%);
+    border-bottom: 1px solid #bbf7d0;
+}
+.jess-modal-content:has(.jess-text-error) .jess-modal-header {
+    background: linear-gradient(135deg, var(--jess-error-light) 0%, #fee2e2 100%);
+    border-bottom: 1px solid #fecaca;
+}
+.jess-modal-content:has(.jess-text-warning) .jess-modal-header {
+    background: linear-gradient(135deg, var(--jess-warning-light) 0%, #fef3c7 100%);
+    border-bottom: 1px solid #fde68a;
+}
+.jess-modal-content:has(.jess-text-info) .jess-modal-header {
+    background: linear-gradient(135deg, var(--jess-info-light) 0%, #dbeafe 100%);
+    border-bottom: 1px solid #bfdbfe;
+}
+
+/* Título */
+.jess-modal-header h5 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.jess-modal-content:has(.jess-text-success) .jess-modal-header h5 { color: var(--jess-success-dark); }
+.jess-modal-content:has(.jess-text-error)   .jess-modal-header h5 { color: var(--jess-error-dark); }
+.jess-modal-content:has(.jess-text-warning) .jess-modal-header h5 { color: var(--jess-warning-dark); }
+.jess-modal-content:has(.jess-text-info)    .jess-modal-header h5 { color: var(--jess-info-dark); }
+
+/* Ícone */
+.jess-modal-header h5 .jess-me-2 {
+    font-size: 1.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Cores de texto por tipo */
+.jess-text-success { color: var(--jess-success); }
+.jess-text-error   { color: var(--jess-error); }
+.jess-text-warning { color: var(--jess-warning); }
+.jess-text-info    { color: var(--jess-info); }
+
+/* ─── Body ──────────────────────────────────────────── */
+.jess-modal-body {
+    padding: 1.4rem;
+    flex: 1 1 auto;
+}
+
+.jess-modal-body p {
+    margin: 0;
+    font-size: .975rem;
+    line-height: 1.65;
+    color: #374151;
+    font-weight: 400;
+}
+
+/* Conteúdo extra */
+.jess-modal-body [id^="extra-"] {
+    margin-top: .85rem;
+    font-size: .875rem;
+    color: #6b7280;
+    line-height: 1.5;
+}
+
+/* ─── Footer ────────────────────────────────────────── */
+.jess-modal-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    padding: .85rem 1.4rem;
+    background: #f9fafb;
+    border-top: 1px solid #f3f4f6;
+    gap: .5rem;
+}
+
+
+
+/* ─── Botões ─────────────────────────────────────────── */
+.jess-btn {
+    padding: .5rem 1.1rem;
+    border-radius: .55rem;
+    cursor: pointer;
+    border: none;
+    font-family: var(--jess-font);
+    font-size: .875rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+}
+
+.jess-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.15);
+    filter: brightness(1.05);
+}
+
+.jess-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 1px 3px rgba(0,0,0,.1);
+    filter: brightness(0.97);
+}
+
+.jess-btn-secondary {
+    background: linear-gradient(135deg, #64748b, #475569);
+    color: #fff;
+}
+
+.jess-btn-success {
+    background: linear-gradient(135deg, var(--jess-success), var(--jess-success-dark));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(34, 197, 94, 0.35);
+}
+
+.jess-btn-danger,
+.jess-btn-error {
+    background: linear-gradient(135deg, var(--jess-error), var(--jess-error-dark));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+}
+
+.jess-btn-warning {
+    background: linear-gradient(135deg, var(--jess-warning), var(--jess-warning-dark));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.35);
+}
+
+.jess-btn-info {
+    background: linear-gradient(135deg, var(--jess-info), var(--jess-info-dark));
+    color: #fff;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.35);
+}
+
+/* ─── Botão Fechar (×) — base ───────────────────────── */
+.jess-btn-close {
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1;
+    width: 2rem;
+    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease, transform 0.15s ease;
+    box-shadow: none;
+    padding: 0;
+    flex-shrink: 0;
+    /* fallback neutro */
+    background: rgba(0, 0, 0, 0);
+    color: #6b7280;
+}
+
+.jess-btn-close:hover {
+    transform: scale(1.1);
+    box-shadow: none;
+    filter: none;
+}
+
+/* × temático por tipo */
+.jess-modal-content:has(.jess-text-success) .jess-btn-close {
+    color: var(--jess-success-dark);
+}
+.jess-modal-content:has(.jess-text-success) .jess-btn-close:hover {
+    background: rgba(22, 163, 74, 0.22);
+}
+
+.jess-modal-content:has(.jess-text-error) .jess-btn-close {
+    color: var(--jess-error-dark);
+}
+.jess-modal-content:has(.jess-text-error) .jess-btn-close:hover {
+    background: rgba(220, 38, 38, 0.22);
+}
+
+.jess-modal-content:has(.jess-text-warning) .jess-btn-close {
+    color: var(--jess-warning-dark);
+}
+.jess-modal-content:has(.jess-text-warning) .jess-btn-close:hover {
+    background: rgba(217, 119, 6, 0.22);
+}
+
+.jess-modal-content:has(.jess-text-info) .jess-btn-close {
+    color: var(--jess-info-dark);
+}
+.jess-modal-content:has(.jess-text-info) .jess-btn-close:hover {
+    background: rgba(37, 99, 235, 0.22);
+}
+
+/* ─── Flex Helpers ───────────────────────────────────── */
+.jess-d-flex { display: flex !important; }
+.jess-align-items-center { align-items: center !important; }
+.jess-me-2 { margin-right: .4rem !important; }
