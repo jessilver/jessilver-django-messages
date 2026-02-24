@@ -5,7 +5,7 @@
 
 <div id="jess-messages-storage" style="display: none;">
     {% for msg in messages %}
-    <div class="jess-modal-content jess-frame" data-index="{{ forloop.counter0 }}">
+    <div class="jess-modal-content jess-frame" data-index="{{ forloop.counter0 }}"{% if msg.auto_close %} data-auto-close="{{ msg.auto_close }}"{% endif %}>
         <div class="jess-modal-header">
             <h5>
                 <span class="jess-me-2 jess-text-{{ msg.type }}">
@@ -34,6 +34,7 @@
                 <button class="jess-btn jess-btn-{{ msg.type }}" onclick="jessOrchestrator.next()">Fechar</button>
             {% endif %}
         </div>
+        {% if msg.auto_close %}<div class="jess-timer-bar" style="animation-duration: {{ msg.auto_close }}s;"></div>{% endif %}
     </div>
     {% endfor %}
 </div>

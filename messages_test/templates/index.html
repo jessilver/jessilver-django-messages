@@ -1,11 +1,55 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Teste de Mensagens</title>
+    <title>JessSilver Messages — Visual Test</title>
+
+    {% if request.resolver_match.url_name == 'integration-test' %}
+    <!-- Bootstrap 5 carregado apenas na rota de integração -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    {% endif %}
+
+    <!-- Estilos exclusivos do ambiente de teste (não distribuídos na lib) -->
+    <link rel="stylesheet" href="{% static 'css/test-styles.css' %}">
 </head>
 <body>
-    
+
+    <div class="test-container">
+        {% if request.resolver_match.url_name == 'integration-test' %}
+            <span class="badge-pill orange">🛡️ Bootstrap 5 ativo nesta página</span>
+        {% else %}
+            <span class="badge-pill">✅ Middleware ativo</span>
+        {% endif %}
+
+        <h1>🧪 Visual Test</h1>
+        <p>Se o Middleware estiver funcionando, os modais aparecerão automaticamente ao carregar cada rota.</p>
+        <p>A pilha é consumida em <code>jess_messages_stack</code> e injetada antes do <code>&lt;/body&gt;</code>.</p>
+
+        <div class="routes">
+            <a href="/" class="btn-basic">🟢 Teste Básico — 5 modais simples</a>
+            <a href="/stress/" class="btn-stress">🔥 Stress Test — tabela + upload + confirmação</a>
+            <a href="/integration/" class="btn-integration">🛡️ Integration Test — modal vs Bootstrap 5</a>
+        </div>
+
+        <button class="btn-reload" onclick="location.reload()">&#8635; Recarregar</button>
+    </div>
+    <!-- #status-toast é injetado via JS pelo onStressTestFinish() -->
+    <div id="status-toast"></div>
+
+    {% if request.resolver_match.url_name == 'integration-test' %}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% endif %}
+
+    <script>
+        function onStressTestFinish() {
+            const toast = document.getElementById('status-toast');
+            toast.textContent = '✅ Teste finalizado com sucesso!';
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+    </script>
+
 </body>
 </html>

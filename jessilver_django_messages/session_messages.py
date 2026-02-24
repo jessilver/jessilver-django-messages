@@ -8,6 +8,7 @@ def add_session_message(
     extra_content=None,
     buttons=None,
     show_close_button=True,
+    auto_close=None,
     **kwargs
 ):
     """
@@ -21,6 +22,10 @@ def add_session_message(
             'action': 'dismiss',            # 'dismiss' fecha o modal
             'callback': 'nomeDaFuncaoJS',   # opcional: função JS global
         }
+
+    `auto_close` (int|float|None): segundos até o modal avançar
+    automaticamente. None desativa o timer. Ideal para 'success' e
+    'info'. Exemplos: auto_close=3, auto_close=5.
     """
     MASTER_KEY = 'jess_messages_stack'
 
@@ -35,6 +40,7 @@ def add_session_message(
         'is_safe': isinstance(extra_content, SafeString) or isinstance(message, SafeString),
         'buttons': buttons or [],
         'show_close_button': show_close_button,
+        'auto_close': auto_close,
     }
 
     request.session[MASTER_KEY].append(modal_data)
@@ -43,17 +49,40 @@ def add_session_message(
 
 # ── Atalhos (Shortcuts) ───────────────────────────────────────
 
-def add_success_message(request, message, title='Sucesso'):
-    add_session_message(request, 'success', title, message)
+def add_success_message(request, message, title='Sucesso', auto_close=None):
+    add_session_message(request, 'success', title, message, auto_close=auto_close)
 
-def add_error_message(request, message, title='Erro'):
-    add_session_message(request, 'error', title, message)
+def add_error_message(request, message, title='Erro', buttons=None):
+    """
+    Exibe uma mensagem de erro.
+
+    `buttons` permite adicionar ações imediatas, como um botão
+    "Tentar Novamente" que dispara um callback JS:
+
+        add_error_message(
+            request,
+            'Falha ao salvar. Verifique sua conexão.',
+            buttons=[
+                {'text': 'Tentar Novamente', 'class': 'jess-btn-danger',
+                 'action': 'dismiss', 'callback': 'onRetry'},
+                {'text': 'Cancelar', 'class': 'jess-btn-secondary',
+                 'action': 'dismiss', 'callback': ''},
+            ]
+        )
+    """
+    add_session_message(
+        request=request,
+        message_type='error',
+        title=title,
+        message=message,
+        buttons=buttons,
+    )
 
 def add_warning_message(request, message, title='Aviso'):
     add_session_message(request, 'warning', title, message)
 
-def add_info_message(request, message, title='Informação'):
-    add_session_message(request, 'info', title, message)
+def add_info_message(request, message, title='Informação', auto_close=None):
+    add_session_message(request, 'info', title, message, auto_close=auto_close)
 
 def add_confirmation_message(
     request,

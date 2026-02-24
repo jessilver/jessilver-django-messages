@@ -1,0 +1,133 @@
+/* ─── Apenas para as Views de Teste (test-styles.css) ─
+   Este arquivo NÃO faz parte da biblioteca distribuída.
+   Estiliza o ambiente de desenvolvimento e testes visuais.
+─────────────────────────────────────────────────────── */
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: #f1f5f9;
+    font-family: system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 2rem;
+}
+
+/* ─── Container principal da página de teste ────────── */
+.test-container {
+    background: #fff;
+    border-radius: 1rem;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, .08);
+    text-align: center;
+    max-width: 480px;
+    width: 100%;
+}
+
+.test-container h1 {
+    font-size: 1.6rem;
+    margin-bottom: .5rem;
+}
+
+.test-container p {
+    color: #64748b;
+    font-size: .95rem;
+    line-height: 1.6;
+    margin-bottom: .35rem;
+}
+
+/* ─── Badge de status ───────────────────────────────── */
+.badge-pill {
+    display: inline-block;
+    background: #f0fdf4;
+    color: #16a34a;
+    border: 1px solid #bbf7d0;
+    border-radius: .4rem;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: .2rem .6rem;
+    margin-bottom: 1.25rem;
+}
+
+.badge-pill.orange {
+    background: #fff7ed;
+    color: #c2410c;
+    border-color: #fed7aa;
+}
+
+/* ─── Navegação entre rotas ─────────────────────────── */
+.routes {
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    margin-top: 1.25rem;
+}
+
+.routes a {
+    display: block;
+    padding: .55rem 1rem;
+    border-radius: .6rem;
+    text-decoration: none;
+    font-size: .875rem;
+    font-weight: 600;
+    transition: filter .15s;
+}
+
+.routes a:hover    { filter: brightness(.93); }
+
+.btn-basic         { background: #eff6ff; color: #1d4ed8; }
+.btn-stress        { background: #fef3c7; color: #d97706; }
+.btn-integration   { background: #fdf4ff; color: #7e22ce; }
+
+/* ─── Botão de reload ───────────────────────────────── */
+.btn-reload {
+    margin-top: .5rem;
+    background: #f3f4f6;
+    color: #374151;
+    border: none;
+    padding: .5rem 1.2rem;
+    border-radius: .5rem;
+    font-size: .875rem;
+    cursor: pointer;
+}
+
+.btn-reload:hover { background: #e5e7eb; }
+
+/* ─── Inline code ───────────────────────────────────── */
+code {
+    background: #f1f5f9;
+    border-radius: .3rem;
+    padding: .1rem .35rem;
+    font-size: .82rem;
+    color: #0f172a;
+}
+
+/* ─── Toast de feedback (Stress Test finish) ────────── */
+#status-toast {
+    position: fixed;
+    bottom: 1.5rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #22c55e;
+    color: #fff;
+    padding: .6rem 1.4rem;
+    border-radius: .6rem;
+    font-weight: 600;
+    font-size: .9rem;
+    box-shadow: 0 4px 12px rgba(34, 197, 94, .4);
+    z-index: 9999;
+    transition: transform 0.3s ease;
+    white-space: nowrap;
+}
+
+#status-toast.show {
+    transform: translateX(-50%) translateY(0);
+}

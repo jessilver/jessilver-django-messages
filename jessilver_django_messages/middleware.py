@@ -7,9 +7,16 @@ class JessMessagesMiddleware:
 
     def __call__(self, request):
         response = self.get_response(request)
-        
-        # Só injeta se for HTML e não for erro/redirecionamento crítico
-        if "text/html" in response.get("Content-Type", "") and response.status_code == 200:
+
+        # PROTEÇÃO: ignorar StreamingHttpResponse (CSV, ficheiros, etc.)
+        if getattr(response, 'streaming', False):
+            return response
+
+        # PROTEÇÃO: ignorar respostas que não sejam HTML
+        if "text/html" not in response.get("Content-Type", ""):
+            return response
+
+        if response.status_code == 200:
             messages = get_and_clear_messages(request)
             if messages:
                 # Renderiza o Portal (A camada acima)

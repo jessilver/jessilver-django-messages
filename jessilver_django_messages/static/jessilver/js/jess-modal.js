@@ -3,6 +3,7 @@ const jessOrchestrator = {
     frames: [],
     backdrop: null,
     container: null,
+    _autoCloseTimer: null,
 
     init() {
         this.frames = document.querySelectorAll('.jess-frame');
@@ -24,17 +25,38 @@ const jessOrchestrator = {
             const currentFrame = this.frames[this.currentIndex];
             this.container.appendChild(currentFrame);
             currentFrame.style.display = 'flex';
+
+            // Inicia o timer de auto-close, se configurado
+            const autoClose = currentFrame.dataset.autoClose;
+            if (autoClose) {
+                this._autoCloseTimer = setTimeout(
+                    () => this.next(),
+                    parseFloat(autoClose) * 1000
+                );
+            }
         } else {
             this.finish();
         }
     },
 
     next() {
+        // Cancela o timer caso o usuário avance manualmente
+        if (this._autoCloseTimer) {
+            clearTimeout(this._autoCloseTimer);
+            this._autoCloseTimer = null;
+        }
+
         const currentFrame = this.frames[this.currentIndex];
-        // Remove animação e limpa
-        currentFrame.remove();
-        this.currentIndex++;
-        this.renderCurrent();
+
+        // Dispara animação de saída
+        currentFrame.classList.add('jess-exit');
+
+        // Aguarda a transição (250ms) antes de remover e avançar
+        setTimeout(() => {
+            currentFrame.remove();
+            this.currentIndex++;
+            this.renderCurrent();
+        }, 250);
     },
 
     handleAction(action, callback) {
